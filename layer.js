@@ -78,6 +78,15 @@ class Layer {
         this.buf = arr.buffer
         return this
     }
+    toGrayScale() {
+        const img = new Uint8Array(this.buf)
+        for (let k = 0; k < img.length/4; k++) {
+            const g = 0.2989 * img[4 * k] + 0.5870 * img[4 * k + 1] + 0.1140 * img[4 * k + 2]
+            img[4 * k] = img[4 * k + 1] = img[4 * k + 2] = g
+        }
+        this.buf = img.buffer
+        return this
+    }
     destroy() {
         this.element.outerHTML = ''
     }

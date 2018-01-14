@@ -345,6 +345,17 @@ var Layer = function () {
             return this;
         }
     }, {
+        key: 'toGrayScale',
+        value: function toGrayScale() {
+            var img = new Uint8Array(this.buf);
+            for (var k = 0; k < img.length / 4; k++) {
+                var g = 0.2989 * img[4 * k] + 0.5870 * img[4 * k + 1] + 0.1140 * img[4 * k + 2];
+                img[4 * k] = img[4 * k + 1] = img[4 * k + 2] = g;
+            }
+            this.buf = img.buffer;
+            return this;
+        }
+    }, {
         key: 'destroy',
         value: function destroy() {
             this.element.outerHTML = '';
