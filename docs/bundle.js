@@ -70,13 +70,14 @@
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-var _require = __webpack_require__(2),
+var _require = __webpack_require__(3),
     Canvas = _require.Canvas,
     Layer = _require.Layer;
 
 var controls = document.getElementById('controls');
 var layers = controls.querySelector('#layers');
 var add = controls.querySelector('#add');
+var fileinput = document.querySelector('#fileinput');
 var canvas = new Canvas(document.getElementById('canvas'));
 var image = document.createElement('img');
 var newLayer = function newLayer() {
@@ -100,8 +101,27 @@ image.onload = function () {
 };
 add.addEventListener('click', newLayer);
 
+fileinput.addEventListener('change', function (e) {
+    var pic = fileinput.files[0];
+    var img = document.createElement('img');
+    img.style.visibility = 'hidden';
+    img.style.position = 'absolute';
+    document.body.appendChild(img);
+    img.onload = function () {
+        var _img$getBoundingClien = img.getBoundingClientRect(),
+            width = _img$getBoundingClien.width,
+            height = _img$getBoundingClien.height;
+
+        canvas.width = width;
+        canvas.height = height;
+        canvas.layer(0).drawImage(img, 0, 0);
+        img.outerHTML = '';
+    };
+    img.src = window.URL.createObjectURL(pic);
+});
+
 global.cnv = canvas;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 1 */
@@ -118,11 +138,41 @@ module.exports = __webpack_require__(0);
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var g;
+
+// This works in non-strict mode
+g = function () {
+	return this;
+}();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1, eval)("this");
+} catch (e) {
+	// This works if the window reference is available
+	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Layer = __webpack_require__(3);
+var Layer = __webpack_require__(4);
 
 var Canvas = function () {
     function Canvas(element) {
@@ -208,7 +258,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -357,36 +407,6 @@ var Layer = function () {
 }();
 
 module.exports = Layer;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var g;
-
-// This works in non-strict mode
-g = function () {
-	return this;
-}();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
-} catch (e) {
-	// This works if the window reference is available
-	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
 
 /***/ })
 /******/ ]);
