@@ -6,6 +6,7 @@
 - [ ] Reordering layers
 - [ ] Event system
 ## Convolution example
+### Code
 ```javascript
 cnv.layer(0).convolution([ // Laplacian of gaussian filter
 [0,0,1,0,0],
@@ -15,3 +16,7 @@ cnv.layer(0).convolution([ // Laplacian of gaussian filter
 [0,0,1,0,0],
 ]).invert()
 ```
+### Entry
+![entry](docs/landscape.png)
+### Result
+![entry](img/LoGres.png)
