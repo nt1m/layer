@@ -1,5 +1,5 @@
 {
-  "name": "layers",
+  "name": "layer",
   "version": "0.1.0",
   "description": "Canvas library",
   "main": "main.js",
